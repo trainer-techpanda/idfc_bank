@@ -1,0 +1,36 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adf-trainer"
+		},
+		"adls_ls_accountKey": {
+			"value": ""
+		},
+		"db_ls_password": {
+			"value": ""
+		},
+		"Http_ls_properties_typeProperties_url": {
+			"value": "https://raw.githubusercontent.com/"
+		},
+		"adls_ls_properties_typeProperties_url": {
+			"value": "https://storageuhhh.dfs.core.windows.net/"
+		},
+		"db_ls_properties_typeProperties_server": {
+			"value": "trainertechpanda.database.windows.net"
+		},
+		"db_ls_properties_typeProperties_database": {
+			"value": "db"
+		},
+		"db_ls_properties_typeProperties_userName": {
+			"value": "trainer"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
