@@ -1,0 +1,58 @@
+{
+	"name": "triggeruh",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "ADFpipeline",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"list": [
+						{
+							"Schema": "idfc",
+							"Table": "DimCustomer",
+							"Update": "updated_at",
+							"back_date": ""
+						},
+						{
+							"Schema": "idfc",
+							"Table": "DimAccount",
+							"Update": "updated_at",
+							"back_date": ""
+						},
+						{
+							"Schema": "idfc",
+							"Table": "DimBranch",
+							"Update": "updated_at",
+							"back_date": ""
+						},
+						{
+							"Schema": "idfc",
+							"Table": "DimDate",
+							"Update": "date",
+							"back_date": ""
+						},
+						{
+							"Schema": "idfc",
+							"Table": "FactTransaction",
+							"Update": "transaction_timestamp",
+							"back_date": ""
+						}
+					]
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 15,
+				"startTime": "2026-08-24T18:25:00",
+				"timeZone": "India Standard Time"
+			}
+		}
+	}
+}
