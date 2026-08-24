@@ -26,6 +26,40 @@
 		"db_ls_properties_typeProperties_userName": {
 			"value": "trainer"
 		},
+		"triggeruh_properties_ADFpipeline_parameters_list": {
+			"value": [
+				{
+					"Schema": "idfc",
+					"Table": "DimCustomer",
+					"Update": "updated_at",
+					"back_date": ""
+				},
+				{
+					"Schema": "idfc",
+					"Table": "DimAccount",
+					"Update": "updated_at",
+					"back_date": ""
+				},
+				{
+					"Schema": "idfc",
+					"Table": "DimBranch",
+					"Update": "updated_at",
+					"back_date": ""
+				},
+				{
+					"Schema": "idfc",
+					"Table": "DimDate",
+					"Update": "date",
+					"back_date": ""
+				},
+				{
+					"Schema": "idfc",
+					"Table": "FactTransaction",
+					"Update": "transaction_timestamp",
+					"back_date": ""
+				}
+			]
+		},
 		"containerUri": {
 			"value": ""
 		},

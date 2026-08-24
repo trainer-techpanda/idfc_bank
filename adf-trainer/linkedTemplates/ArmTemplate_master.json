@@ -35,6 +35,41 @@
 			"type": "string",
 			"defaultValue": "trainer"
 		},
+		"triggeruh_properties_ADFpipeline_parameters_list": {
+			"type": "array",
+			"defaultValue": [
+				{
+					"Schema": "idfc",
+					"Table": "DimCustomer",
+					"Update": "updated_at",
+					"back_date": ""
+				},
+				{
+					"Schema": "idfc",
+					"Table": "DimAccount",
+					"Update": "updated_at",
+					"back_date": ""
+				},
+				{
+					"Schema": "idfc",
+					"Table": "DimBranch",
+					"Update": "updated_at",
+					"back_date": ""
+				},
+				{
+					"Schema": "idfc",
+					"Table": "DimDate",
+					"Update": "date",
+					"back_date": ""
+				},
+				{
+					"Schema": "idfc",
+					"Table": "FactTransaction",
+					"Update": "transaction_timestamp",
+					"back_date": ""
+				}
+			]
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -82,6 +117,9 @@
 					},
 					"db_ls_properties_typeProperties_userName": {
 						"value": "[parameters('db_ls_properties_typeProperties_userName')]"
+					},
+					"triggeruh_properties_ADFpipeline_parameters_list": {
+						"value": "[parameters('triggeruh_properties_ADFpipeline_parameters_list')]"
 					}
 				}
 			},

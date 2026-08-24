@@ -34,6 +34,41 @@
 		"db_ls_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "trainer"
+		},
+		"triggeruh_properties_ADFpipeline_parameters_list": {
+			"type": "array",
+			"defaultValue": [
+				{
+					"Schema": "idfc",
+					"Table": "DimCustomer",
+					"Update": "updated_at",
+					"back_date": ""
+				},
+				{
+					"Schema": "idfc",
+					"Table": "DimAccount",
+					"Update": "updated_at",
+					"back_date": ""
+				},
+				{
+					"Schema": "idfc",
+					"Table": "DimBranch",
+					"Update": "updated_at",
+					"back_date": ""
+				},
+				{
+					"Schema": "idfc",
+					"Table": "DimDate",
+					"Update": "date",
+					"back_date": ""
+				},
+				{
+					"Schema": "idfc",
+					"Table": "FactTransaction",
+					"Update": "transaction_timestamp",
+					"back_date": ""
+				}
+			]
 		}
 	},
 	"variables": {
@@ -1903,6 +1938,38 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/adls_ls')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/triggeruh')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "ADFpipeline",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"list": "[parameters('triggeruh_properties_ADFpipeline_parameters_list')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Minute",
+						"interval": 15,
+						"startTime": "2026-08-24T18:25:00",
+						"timeZone": "India Standard Time"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/ADFpipeline')]"
 			]
 		}
 	]
