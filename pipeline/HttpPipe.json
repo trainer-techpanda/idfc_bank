@@ -1,0 +1,83 @@
+{
+	"name": "HttpPipe",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "JsonSource",
+						"storeSettings": {
+							"type": "HttpReadSettings",
+							"requestMethod": "GET"
+						},
+						"formatSettings": {
+							"type": "JsonReadSettings"
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "Http_ds",
+						"type": "DatasetReference",
+						"parameters": {
+							"file_name": {
+								"value": "DimCustomer.json",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Parquet_ds",
+						"type": "DatasetReference",
+						"parameters": {
+							"dir_name": {
+								"value": "DimCustomer_GIT",
+								"type": "Expression"
+							},
+							"file_name": {
+								"value": "DimCustomer",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"file_name": {
+				"type": "array",
+				"defaultValue": [
+					{
+						"filename": "DimCustomer.json"
+					}
+				]
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2026-08-24T12:28:58Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

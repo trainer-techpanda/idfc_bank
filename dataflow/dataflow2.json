@@ -1,0 +1,132 @@
+{
+	"name": "dataflow2",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"linkedService": {
+						"referenceName": "adls_ls",
+						"type": "LinkedServiceReference"
+					},
+					"name": "DimAccountsource"
+				},
+				{
+					"linkedService": {
+						"referenceName": "adls_ls",
+						"type": "LinkedServiceReference"
+					},
+					"name": "FactTransactionsource"
+				}
+			],
+			"sinks": [
+				{
+					"linkedService": {
+						"referenceName": "adls_ls",
+						"type": "LinkedServiceReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "FactjoinDim"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "aggregate1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          account_id as long,",
+				"          customer_id as integer,",
+				"          account_type as string,",
+				"          account_status as string,",
+				"          opening_date as date,",
+				"          closing_date as date,",
+				"          branch_id as integer,",
+				"          balance as decimal(18,2),",
+				"          updated_at as timestamp",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'delta',",
+				"     fileSystem: 'silver',",
+				"     folderPath: 'DimAccount') ~> DimAccountsource",
+				"source(output(",
+				"          transaction_id as long,",
+				"          account_id as long,",
+				"          customer_id as integer,",
+				"          branch_id as integer,",
+				"          date_key as integer,",
+				"          transaction_type as string,",
+				"          transaction_amount as decimal(18,2),",
+				"          transaction_status as string,",
+				"          payment_mode as string,",
+				"          transaction_timestamp as timestamp",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'delta',",
+				"     fileSystem: 'silver',",
+				"     folderPath: 'FactTransaction') ~> FactTransactionsource",
+				"FactTransactionsource, DimAccountsource join(FactTransactionsource@account_id == DimAccountsource@account_id,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> FactjoinDim",
+				"FactjoinDim select(mapColumn(",
+				"          transaction_id,",
+				"          account_id = FactTransactionsource@account_id,",
+				"          customer_id = FactTransactionsource@customer_id,",
+				"          branch_id = FactTransactionsource@branch_id,",
+				"          date_key,",
+				"          transaction_type,",
+				"          transaction_amount,",
+				"          transaction_status,",
+				"          payment_mode,",
+				"          transaction_timestamp,",
+				"          account_type,",
+				"          account_status,",
+				"          opening_date,",
+				"          closing_date,",
+				"          balance,",
+				"          updated_at",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 aggregate(groupBy(account_id,",
+				"          customer_id,",
+				"          account_type,",
+				"          account_status,",
+				"          balance),",
+				"     total_transaction = count(transaction_id),",
+				"          total_transaction_amount = coalesce(sum(transaction_amount),0),",
+				"          last_transaction = max(transaction_timestamp)) ~> aggregate1",
+				"aggregate1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'delta',",
+				"     fileSystem: 'gold',",
+				"     folderPath: 'AggAcc',",
+				"     mergeSchema: false,",
+				"     autoCompact: false,",
+				"     optimizedWrite: false,",
+				"     vacuum: 0,",
+				"     deletable: false,",
+				"     insertable: true,",
+				"     updateable: false,",
+				"     upsertable: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

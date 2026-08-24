@@ -1,0 +1,65 @@
+{
+	"name": "FactTransactionParquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "adls_ls",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "FactTransaction_bronze",
+				"folderPath": "FactTransaction",
+				"fileSystem": "bronze"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "transaction_id",
+				"type": "INT64"
+			},
+			{
+				"name": "account_id",
+				"type": "INT64"
+			},
+			{
+				"name": "customer_id",
+				"type": "INT32"
+			},
+			{
+				"name": "branch_id",
+				"type": "INT32"
+			},
+			{
+				"name": "date_key",
+				"type": "INT32"
+			},
+			{
+				"name": "transaction_type",
+				"type": "UTF8"
+			},
+			{
+				"name": "transaction_amount",
+				"type": "DECIMAL",
+				"precision": 18,
+				"scale": 2
+			},
+			{
+				"name": "transaction_status",
+				"type": "UTF8"
+			},
+			{
+				"name": "payment_mode",
+				"type": "UTF8"
+			},
+			{
+				"name": "transaction_timestamp",
+				"type": "INT96"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

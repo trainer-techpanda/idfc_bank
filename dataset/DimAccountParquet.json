@@ -1,0 +1,61 @@
+{
+	"name": "DimAccountParquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "adls_ls",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "DimAccount_bronze",
+				"folderPath": "DimAccount",
+				"fileSystem": "bronze"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "account_id",
+				"type": "INT64"
+			},
+			{
+				"name": "customer_id",
+				"type": "INT32"
+			},
+			{
+				"name": "account_type",
+				"type": "UTF8"
+			},
+			{
+				"name": "account_status",
+				"type": "UTF8"
+			},
+			{
+				"name": "opening_date",
+				"type": "DATE"
+			},
+			{
+				"name": "closing_date",
+				"type": "DATE"
+			},
+			{
+				"name": "branch_id",
+				"type": "INT32"
+			},
+			{
+				"name": "balance",
+				"type": "DECIMAL",
+				"precision": 18,
+				"scale": 2
+			},
+			{
+				"name": "updated_at",
+				"type": "INT96"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

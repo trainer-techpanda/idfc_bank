@@ -1,0 +1,27 @@
+{
+	"name": "Http_ds",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Http_ls",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"file_name": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": {
+					"value": "trainer-techpanda/Project12/refs/heads/main/@{dataset().file_name}",
+					"type": "Expression"
+				}
+			}
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,51 @@
+{
+	"name": "DimDateParquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "adls_ls",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "DimDate_bronze",
+				"folderPath": "DimDate",
+				"fileSystem": "bronze"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "date_key",
+				"type": "INT32"
+			},
+			{
+				"name": "date",
+				"type": "DATE"
+			},
+			{
+				"name": "day",
+				"type": "INT32"
+			},
+			{
+				"name": "month",
+				"type": "INT32"
+			},
+			{
+				"name": "year",
+				"type": "INT32"
+			},
+			{
+				"name": "quarter",
+				"type": "INT32"
+			},
+			{
+				"name": "weekday",
+				"type": "UTF8"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
